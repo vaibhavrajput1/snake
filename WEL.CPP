@@ -5,8 +5,49 @@
 #include<iostream.h>
 #include<stdlib.h>
 
+void loading(int x,int y,int z)
+{
+//0
+if(z==0)
+circle(x+25,y,3);
+//30
+if(z==30)
+circle(x+22,y-25/2,3);
+//60
+if(z==60)
+circle(x+25/2,y-22,3);
+//90
+if(z==90)
+circle(x,y-25,3);
+//120
+if(z==120)
+circle(x-25/2,y-22,3);
+//150
+if(z==150)
+circle(x-22,y-25/2,3);
+//180
+if(z==180)
+circle(x-25,y,3);
+//210
+if(z==210)
+circle(x-22,y+25/2,3);
+//240
+if(z==240)
+circle(x-25/2,y+22,3);
+//270
+if(z==270)
+circle(x,y+25,3);
+//300
+if(z==300)
+circle(x+25/2,y+22,3);
+//330
+if(z==330)
+circle(x+22,y+25/2,3);
+}
+
   void welcome()
   {
+
 
 int edge1[]={130,30,30,30,30,100,100,100,100,130,30,130,30,150,130,150,130,80,60,80,60,50,130,50,130,30};
 int edge2[]={150,150,150,30,180,30,230,130,230,30,250,30,250,150,220,150,170,50,170,150,150,150 };
@@ -139,12 +180,125 @@ delay(100);
 
 //developed By
 setcolor(WHITE);
-settextstyle(8,0,1);
-outtextxy(330,425,"Developed By : Bhai & Sons");
+settextstyle(2,0,6);
+outtextxy(385,455,"Powered By : Programmers");
 setcolor(7);
-settextstyle(8,0,1);
-outtextxy(331,424,"Developed By : Bhai & Sons");
+settextstyle(4,0,3);
+//outtextxy(331,451,"Developed By : Bhai & Sons");
 
+//loading
+setcolor(2);
+//circle(150,440,25);
+//ellipse(125,440,0,360,2,5);
+int x=320,y=435;
+int  z=0;
+char str[4];
+for(int i=3030;i>0;i-=30)
+{
+setfillstyle(0,1);
+bar(x-30,y-30,x+30,y+30);
+setcolor(1);
+loading(x,y,(i+30)%360);
+setcolor(2);
+loading(x,y,(i+60)%360);
+setcolor(3);
+loading(x,y,(i+90)%360);
+setcolor(4);
+loading(x,y,(i+120)%360);
+setcolor(5);
+loading(x,y,(i+150)%360);
+setcolor(6);
+loading(x,y,(i+180)%360);
+setcolor(WHITE);
+settextstyle(2,0,7);
+if(z<10)
+sprintf(str,"0%d%",z);
+else
+sprintf(str,"%d%",z);
+outtextxy(303,422,str);
+z+=1;
+delay(40);
+}
+
+}
+
+void menu()
+{                           clrscr();
+int a[30]={210,510,480,215,210,200,500,470,215,200,210,465,490,205,210,210,465,500,200,210,220,460,485,210,220,253,450,440,280,255};
+int b[30]={50,50,105,90,50,150,150,195,185,150,205,205,245,240,205,265,265,310,305,265,325,330,360,370,325,380,375,415,430,380};
+int cords1[]={a[5],b[5],a[6],b[6],a[7],b[7],a[8],b[8],a[9],b[9]};
+int cords2[]={a[10],b[10],a[11],b[11],a[12],b[12],a[13],b[13],a[14],b[14]};
+int cords3[]={a[15],b[15],a[16],b[16],a[17],b[17],a[18],b[18],a[19],b[19]};
+int cords4[]={a[20],b[20],a[21],b[21],a[22],b[22],a[23],b[23],a[24],b[24]};
+int cords5[]={a[25],b[25],a[26],b[26],a[27],b[27],a[28],b[28],a[29],b[29]};
+setcolor(1);
+setlinestyle(0,1,3);
+setfillstyle(2,1);
+floodfill(5,5,1);
+rectangle(0,0,getmaxx(),getmaxy());
+//Down dialog box
+setfillstyle(1,14);
+bar(0,460,639,479);
+setcolor(1);
+settextstyle(2,0,5);
+outtextxy(10,460,"To Move UP or DOWN press W or S respectively");
+outtextxy(360,460,"// To Enter any option press E");
+
+
+//Tweeter Bird
+setcolor(11);
+settextstyle(4,0,8);
+outtextxy(10,35,"Snake And ladder");
+
+//Continue
+setcolor(6);
+setfillstyle(1,9);
+setlinestyle(0,1,3);
+fillpoly(5,cords1);
+
+setcolor(14);
+settextstyle(8,0,5);
+outtextxy(240,140,"Continue");
+
+//Newgame
+setcolor(6);
+setfillstyle(1,3);
+setlinestyle(0,1,3);
+fillpoly(5,cords2);
+
+setcolor(14);
+settextstyle(8,0,5);
+outtextxy(240,187,"Newgame");
+
+//High score
+setcolor(6);
+setfillstyle(1,3);
+setlinestyle(0,1,3);
+fillpoly(5,cords3);
+
+setcolor(14);
+settextstyle(8,0,5);
+outtextxy(240,250,"HighScore");
+
+//Help
+setcolor(6);
+setfillstyle(1,3);
+setlinestyle(0,1,3);
+fillpoly(5,cords4);
+
+setcolor(14);
+settextstyle(8,0,5);
+outtextxy(290,310,"Help");
+
+//About
+setcolor(6);
+setfillstyle(1,11);
+setlinestyle(0,1,3);
+fillpoly(5,cords5);
+
+setcolor(14);
+settextstyle(8,0,5);
+outtextxy(300,365,"About");
 
 
 }
@@ -158,5 +312,6 @@ void main()
 {load();
 
 welcome();
+//menu();
 getch();
 }
