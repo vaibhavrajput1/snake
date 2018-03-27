@@ -180,8 +180,8 @@ clearviewport();
 
    setcolor(2);
 setlinestyle(0,1,3);
-setfillstyle(2,1);
-floodfill(5,5,1);
+//setfillstyle(2,1);
+//floodfill(5,5,1);
 rectangle(0,0,getmaxx(),getmaxy());
  setcolor(WHITE);
    for(int i=20;i<=420;i+=40)
@@ -203,6 +203,12 @@ rectangle(0,0,getmaxx(),getmaxy());
    outtextxy(40,80,"81  82   83   84   85   86   87   88   89   90");
    outtextxy(30,40,"100  99   98   97   96   95   94   93   92   91");
    dice(l);
+   setlinestyle(0,1,3);
+   rectangle(460,200,630,240);
+   settextstyle(1,0,3);
+   outtextxy(470,205,"Player 1: ");
+   rectangle(460,300,630,340);
+   outtextxy(470,305,"Player 2: ");
 }
 
 void pointer(int i,int y)
@@ -235,6 +241,7 @@ void movepointer(int i,int y,int j, int k,int l)
       board(l);
       pointer(i,y-(q*4));
       delay(10);
+
      }
      board(l);
      pointer(j,k);
@@ -686,7 +693,7 @@ void main()
 {load();
 
 //welcome();
-menu();
+//menu();
 //board();
 playlogic();
 getch();
