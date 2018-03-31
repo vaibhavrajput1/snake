@@ -225,7 +225,7 @@ circle(585,70,2);
 
 
 }
-void board(int l,int p, int p1)
+void board(int l,int p, int p1,int active)
 {
 clearviewport();
 
@@ -233,6 +233,7 @@ clearviewport();
 setlinestyle(0,1,3);
 //setfillstyle(2,1);
 //floodfill(5,5,1);
+setcolor(CYAN);
 rectangle(0,0,getmaxx(),getmaxy());
  setcolor(WHITE);
    for(int i=20;i<=420;i+=40)
@@ -260,22 +261,33 @@ rectangle(0,0,getmaxx(),getmaxy());
    setlinestyle(0,1,3);
    rectangle(460,200,630,240);
    settextstyle(1,0,3);
+   setcolor(5);
    char c[4],c1[4];
    sprintf(c,"%d",p);
    sprintf(c1,"%d",p1);
    outtextxy(470,205,"Player 1: ");
    outtextxy(580,205,c);
+   setcolor(2);
    rectangle(460,300,630,340);
+   setcolor(5);
    outtextxy(470,305,"Player 2: ");
    outtextxy(580,305,c1);
+   setcolor(RED);
+   if(active==0)
+   outtextxy(445,205,">");
+   else
+   outtextxy(445,305,">");
 }
+
 
 void pointer(int i,int y,int player)
 {
 if(player==0)
-setcolor(RED);
-else
-setcolor(BLUE);
+{setcolor(RED);
+}else
+{setcolor(BLUE);
+circle(i,y,2);
+}
 setlinestyle(7,1,1);
 setfillstyle(2,1);
 arc(i,y,-30,210,10);
@@ -292,7 +304,7 @@ line(i-6,y+5,i,y+15);
 line(i+6,y+5,i,y+15);
 
 }
-void movepointer(int i,int y,int j, int k,int l,int i1,int y1,int pp,int pp1,int player)
+void movepointer(int i,int y,int j, int k,int l,int i1,int y1,int pp,int pp1,int player,int act)
 {
 int player1;
 if(player==0)
@@ -305,25 +317,25 @@ player1=0;
     {
      for(int q=1;q<=abs(y-k)/4;q+=2)
      {
-      board(l,pp,pp1);
+      board(l,pp,pp1,act);
       pointer(i,y-(q*4),player);
       pointer(i1,y1,player1);
-      delay(10);
+  //    delay(10);
 
      }
-    board(l,pp,pp1);
+    board(l,pp,pp1,act);
     pointer(j,k,player);
     pointer(i1,y1,player1);
     }
     else
     { for(int q=1;q<=abs(y-k)/4;q+=2)
      {
-      board(l,pp,pp1);
+      board(l,pp,pp1,act);
       pointer(i,y+(q*4),player);
       pointer(i1,y1,player1);
-      delay(10);
+  //    delay(10);
      }
-    board(l,pp,pp1);
+    board(l,pp,pp1,act);
     pointer(j,k,player);
     pointer(i1,y1,player1);
     }
@@ -333,24 +345,24 @@ player1=0;
   { if(i>j)
    {
     for(int q=1;q<=abs(i-j)/4;q+=2)
-    {board(l,pp,pp1);
+    {board(l,pp,pp1,act);
     pointer(i-(q*4),y,player);
     pointer(i1,y1,player1);
-    delay(5);
+   // delay(5);
     }
-   board(l,pp,pp1);
+   board(l,pp,pp1,act);
    pointer(j,k,player);
     pointer(i1,y1,player1);
    }
    else
    {
    for(int q=1;q<=abs(j-i)/4;q+=2)
-    {board(l,pp,pp1);
+    {board(l,pp,pp1,act);
     pointer(i+(q*4),y,player);
     pointer(i1,y1,player1);
-    delay(5);
+    //delay(5);
     }
-    board(l,pp,pp1);
+    board(l,pp,pp1,act);
     pointer(j,k,player);
     pointer(i1,y1,player1);
    }
@@ -361,23 +373,31 @@ void playlogic()
 {         int points=0;
 int pointsb=0;
 randomize();
-board(0,0,0);
+board(0,0,0,0);
 char s[4];
 pointer(40,440,0);
 pointer(70,440,1);
+int active=0;
 int flaga=0,flagb=0,p;
 int xa=40,ya=440,xb=40,yb=440;
 int chance=0;
 char c;
  C:
  if(chance==0)
+ {active=0;
  goto A;
- else
+ }else
+ {active=1;
  goto B;
+ }
 
 
 
 A:
+active=0;
+board(p,points,pointsb,active);
+pointer(xa,ya,0);
+ pointer(xb,yb,1);
  c=getch();
 if(c==27)
 { menu();
@@ -399,12 +419,13 @@ else
   if(flaga==0)
    {if(p==1)
     {     points++;
-     movepointer(40,440,40,400,p,xb,yb,points,pointsb,0);
+     movepointer(40,440,40,400,p,xb,yb,points,pointsb,0,active);
 	xa=40;
 	ya=400;
      flaga=1;
      goto A;
     }
+    active=1;
    }
     else if(flaga==1)
    { // board();
@@ -412,32 +433,38 @@ else
       for(int u=0;u<p;u++)
       {
 	  if(xa==400&&ya%80==0)
-	  {movepointer(xa,ya,xa,ya-40,p,xb,yb,points,pointsb,0);
+	  {movepointer(xa,ya,xa,ya-40,p,xb,yb,points,pointsb,0,active);
 	  ya-=40;
 	  }
 	  else if(xa==40 && ya%80!=0)
-	  {    movepointer(xa,ya,xa,ya-40,p,xb,yb,points,pointsb,0);
+	  {    movepointer(xa,ya,xa,ya-40,p,xb,yb,points,pointsb,0,active);
 	  ya-=40;
 	  }
 	  else if(ya%80==0)
-	  {movepointer(xa,ya,xa+40,ya,p,xb,yb,points,pointsb,0);
+	  {movepointer(xa,ya,xa+40,ya,p,xb,yb,points,pointsb,0,active);
 	   xa+=40;
 	  }
 	  else
 	  {
-	  movepointer(xa,ya,xa-40,ya,p,xb,yb,points,pointsb,0);
+	  movepointer(xa,ya,xa-40,ya,p,xb,yb,points,pointsb,0,active);
 	  xa-=40;
 	  }
-	  delay(100);
+	//  delay(100);
       }
    }
    chance=1;
+   active=1;
   goto C;
  }
 
 
  //player 2
  B:
+ active=1;
+ board(p,points,pointsb,active);
+ pointer(xa,ya,0);
+ pointer(xb,yb,1);
+
 c=getch();
 if(c==27)
 { menu();
@@ -461,10 +488,11 @@ else
     {     pointsb++;
     xb=40;
     yb=400;
-     movepointer(40,440,xb,yb,p,xa,ya,points,pointsb,1);
+     movepointer(40,440,xb,yb,p,xa,ya,points,pointsb,1,active);
      flagb=1;
      goto B;
     }
+    active=0;
    }
     else if(flagb==1)
    { // board();
@@ -472,26 +500,27 @@ else
       for(int u=0;u<p;u++)
       {
 	  if(xb==400&&yb%80==0)
-	  {movepointer(xb,yb,xb,yb-40,p,xa,ya,points,pointsb,1);
+	  {movepointer(xb,yb,xb,yb-40,p,xa,ya,points,pointsb,1,active);
 	  yb-=40;
 	  }
 	  else if(xb==40 && yb%80!=0)
-	  {    movepointer(xb,yb,xb,yb-40,p,xa,ya,points,pointsb,1);
+	  {    movepointer(xb,yb,xb,yb-40,p,xa,ya,points,pointsb,1,active);
 	  yb-=40;
 	  }
 	  else if(yb%80==0)
-	  {movepointer(xb,yb,xb+40,yb,p,xa,ya,points,pointsb,1);
+	  {movepointer(xb,yb,xb+40,yb,p,xa,ya,points,pointsb,1,active);
 	   xb+=40;
 	  }
 	  else
 	  {
-	  movepointer(xb,yb,xb-40,yb,p,xa,ya,points,pointsb,1);
+	  movepointer(xb,yb,xb-40,yb,p,xa,ya,points,pointsb,1,active);
 	  xb-=40;
 	  }
-	  delay(100);
+	  //delay(100);
       }
    }
    chance=0;
+   active=0;
   goto C;
  }
 
