@@ -12,7 +12,6 @@ void About();
 void about();
 void menu();
 void help();
-
 void snake3()
 {
     setcolor(GREEN);
@@ -22,16 +21,14 @@ void snake3()
     arc(105,328,273,80,70);
     arc(143,220,150,180,40);
     arc(143,215,180,230,40);
-    arc(112,328,265,50,75);
+    arc(112,328,275,50,75);
     arc(80,354,45,72,115);
-    line(102,400,104,402);
-    line(102,400,107,399);
+    line(118,402,108,398);
+
     line(95,200,110,185);
     line(110,185,109,200);
-    line(110,185,111,182);
     circle(104,198,1);
     setfillstyle(1,12);
-  //  floodfill(103,199,8);
 }
 
 
@@ -58,12 +55,25 @@ void snake2()
 setcolor(GREEN);
 setlinestyle(0,1,3);
 arc(155,128,320,0,170);
-arc(165,128,305,0,170);
-line(284,229,261,260);
+arc(165,128,330,0,170);
 line(325,120,332,105);
 line(332,105,335,120);
-circle(330,115,1);
+line(325,128,325,120);
+line(335,128,335,120);
+line(312,212,285,240);
+circle(331,117,1);
+
+arc(155+30,128+160,320,0,170);
+arc(165+30,128+160,330,0,170);
+line(325+30,120+160,332+30,105+160);
+line(332+30,105+160,335+30,120+160);
+line(325+30,128+160,325+30,120+160);
+line(335+30,128+160,335+30,120+160);
+line(312+30,212+160,285+30,240+160);
+circle(331+30,117+160,1);
+
 }
+
 void help()
 {   clearviewport();
 About();
@@ -261,7 +271,7 @@ rectangle(0,0,getmaxx(),getmaxy());
    setlinestyle(0,1,3);
    rectangle(460,200,630,240);
    settextstyle(1,0,3);
-   setcolor(5);
+   setcolor(RED);
    char c[4],c1[4];
    sprintf(c,"%d",p);
    sprintf(c1,"%d",p1);
@@ -269,10 +279,10 @@ rectangle(0,0,getmaxx(),getmaxy());
    outtextxy(580,205,c);
    setcolor(2);
    rectangle(460,300,630,340);
-   setcolor(5);
+   setcolor(BLUE);
    outtextxy(470,305,"Player 2: ");
    outtextxy(580,305,c1);
-   setcolor(RED);
+   setcolor(WHITE);
    if(active==0)
    outtextxy(445,205,">");
    else
@@ -429,7 +439,7 @@ else
    }
     else if(flaga==1)
    { // board();
-   points+=p;
+      points+=p;
       for(int u=0;u<p;u++)
       {
 	  if(xa==400&&ya%80==0)
@@ -450,6 +460,38 @@ else
 	  xa-=40;
 	  }
 	//  delay(100);
+      }
+
+   if((xa==120&&ya==40)||(xa==320&&ya==120)||(xa==120&&ya==200)||(xa==360||ya==280))
+    {if(xa==120&&ya==40)
+     { points=67;
+      movepointer(xa,ya,280,160,p,xb,yb,points,pointsb,0,active);
+	   xa=280;
+	   ya=160;
+     }
+     else if(xa=320&&ya==120)
+     {   points=47;
+      movepointer(xa,ya,280,240,p,xb,yb,points,pointsb,0,active);
+	   xa=280;
+	   ya=240;
+     }
+     else if(xa=120&&ya==200)
+     {   points=3;
+      movepointer(xa,ya,120,400,p,xb,yb,points,pointsb,0,active);
+	   xa=120;
+	   ya=400;
+     }
+     else if(xa=360&&ya==280)
+     {   points=8;
+      movepointer(xa,ya,320,400,p,xb,yb,points,pointsb,0,active);
+	   xa=320;
+	   ya=400;
+     }
+   }
+
+
+      if(p==6)
+      {goto A;
       }
    }
    chance=1;
@@ -495,6 +537,8 @@ else
     active=0;
    }
     else if(flagb==1)
+
+
    { // board();
    pointsb+=p;
       for(int u=0;u<p;u++)
@@ -517,6 +561,35 @@ else
 	  xb-=40;
 	  }
 	  //delay(100);
+      }
+   if((xb==120&&yb==40)||(xb==320&&yb==120)||(xb==120&&yb==200)||(xb==360||yb==280))
+    {if(xb==120&&yb==40)
+     { pointsb=67;
+      movepointer(xb,yb,280,160,p,xa,ya,points,pointsb,1,active);
+	   xb=280;
+	   yb=160;
+     }
+     else if(xb=320&&yb==120)
+     {   pointsb=47;
+      movepointer(xb,yb,280,240,p,xa,ya,points,pointsb,1,active);
+	   xb=280;
+	   yb=240;
+     }
+     else if(xb=120&&yb==200)
+     {   pointsb=3;
+      movepointer(xb,yb,120,400,p,xa,ya,points,pointsb,1,active);
+	   xb=120;
+	   yb=400;
+     }
+     else if(xb=360&&yb==280)
+     {   pointsb=8;
+      movepointer(xb,yb,320,400,p,xa,ya,points,pointsb,1,active);
+	   xb=320;
+	   yb=400;
+     }
+   }
+      if(p==6)
+      {goto B;
       }
    }
    chance=0;
@@ -871,7 +944,7 @@ outtextxy(150,yy,">");
 
 void load()
 {int gd=DETECT,gm;
-initgraph(&gd,&gm,"C:\\Turboc3\\bgi");
+initgraph(&gd,&gm,"C:\\tc\\bgi");
 rectangle(0,0,getmaxx(),getmaxy());
 }
 void main()
